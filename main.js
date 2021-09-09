@@ -20,6 +20,7 @@ function submitIssue(e) {
   fetchIssues();
   e.preventDefault();
 }
+
 const closeIssue = id => {
   const issues = JSON.parse(localStorage.getItem('issues'));
   const currentIssue = issues.find(issue => issue.id === id);
@@ -30,7 +31,7 @@ const closeIssue = id => {
 
 const deleteIssue = id => {
   const issues = JSON.parse(localStorage.getItem('issues'));
-  const remainingIssues = issues.filter(issue => issue.id === id)
+  const remainingIssues = issues.filter(issue => issue.id !== id)
   localStorage.removeItem('issues', JSON.stringify(remainingIssues));
   fetchIssues();
 }
@@ -38,8 +39,8 @@ const deleteIssue = id => {
 const fetchIssues = () => {
   const issues = JSON.parse(localStorage.getItem('issues'));
   const issuesList = document.getElementById('issuesList');
+  issuesList.innerHTML = '';
 
-  issuesList.innerHTML;
   if (issues) {
     for (var i = 0; i < issues.length; i++) {
       const { id, description, severity, assignedTo, status } = issues[i];
